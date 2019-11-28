@@ -19,14 +19,23 @@ int lg_rec_hist(){
     int ans = 0;
     pos.push(0);
     for(int i = 0; i < m; i++){
-        if(vec[i] > last.top()){pos.push(i); last.push(vec[i]);}
+        if(last.empty()||vec[i] > last.top()){
+            pos.push(i);
+            last.push(vec[i]);
+        }
         else{
             while(vec[i] < last.top()){
                 ans = max(ans, (last.top()+1)*(i-pos.top()+1));
+                cout << "oi";
                 last.pop();
                 pos.pop();
             }
         }
+    }
+    while(vec[m] < last.top()){
+        ans = max(ans, (last.top()+1)*(m-pos.top()+1));
+        last.pop();
+        pos.pop();
     }
     return ans;
 }
@@ -47,5 +56,5 @@ int main(){
         }
         ans = max(ans, lg_rec_hist() );
     }
-    return ans;
+    cout << ans;
 }
