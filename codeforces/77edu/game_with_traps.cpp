@@ -25,8 +25,21 @@ int bsa(){
   int ans = -1;
   while(beg <= end){
     mid = beg + (end - beg)/2;
-
+    if(path(t, mid)){
+      ans = mid;
+      end = mid-1;
+    }
+    else beg = mid+1;
   }
+  return ans;
+}
+
+void belongs(int mi){
+  int hi = 0;
+  for(int i = 0; i < m; i++){  
+    if(soldiers[i] >= mi) hi++;
+  }
+  cout << hi << endl;
 }
 
 int main(){
@@ -39,5 +52,7 @@ int main(){
     traps[i].first.second = ((r - l) << 1) + 2;
     traps[i].second = d;
   }
-
+  int ans = bsa();
+  if(ans == -1) cout << -1 << endl;
+  else belongs(ans);
 }
