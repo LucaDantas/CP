@@ -27,3 +27,5 @@ Actually I don't need to do this first iteration causa I just found out that all
 
 There is another solution that I think is actually better because that one would end up being square time because we would have to compare to each of the previous step to compute all the possible paths and that would double every time until reaching 2^k, if all paths were possible. So not that good. The other solution I tought of is to do a binary search answer which would be way better because it passes the time limit.
 It would work by saving a interval of possible min number of soldiers and then going through those paths with the possible number of soldiers and then save the possible answers and try to improve those until you find the final answer.
+
+I submitted it but there was a problem because I didn't consider that we could disarm multiple traps at the same "travel" of the person without its crew, and after analyzing it i found out that we could simply create a pointer which would represent the end of the "travel" which is the furthest away disarming point of all the ones that we've visited and go disarming every thing that we've passed.
