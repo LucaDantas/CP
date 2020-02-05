@@ -43,7 +43,7 @@ bool path(int price, int minag){
     }
     else i++;
   }
-  price -= n - current;
+  price -= n - current + 1;
   if(price >= 0) return true;
   else return false;
 }
