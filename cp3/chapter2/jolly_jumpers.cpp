@@ -1,24 +1,24 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-bool solve(int n){
-    bitset<3001> bs;
-    int a, b;
-    cin >> b;
-    for(int i = 0; i < n-1; i++){
-        cin >> a;
-        if(abs(a-b) > n-1) return false;
-        if(bs[abs(a-b)] == 0) bs[abs(a-b)] = 1;
-        else return false;
-        b = a;
+bool solve(int n) {
+    bitset<3010> sv;
+    bool broke = false;
+    vector<int> numb(n);
+    for(int i = 0; i < n; i++){
+        cin >> numb[i];
+    }
+    for(int i = 1; i < n; i++){
+        int d = abs(numb[i] - numb[i-1]);
+        if(d == 0 || d>n-1 || sv.test(d)) return false;
+        else sv.set(abs(numb[i] - numb[i-1]));
     }
     return true;
 }
 
 int main(){
     int n;
-    while(cin >> n){
-        if(solve(n)) cout << "Jolly" << endl;
-        else cout << "Not jolly" << endl;
+    while(cin >> n && n){
+        solve(n)? cout << "Jolly" << endl : cout << "Not Jolly" <<endl;
     }
 }
