@@ -3,8 +3,18 @@ using namespace std;
 
 multiset<int> arr;
 
-int pen(int pos){
+int search(){
+    int beg = 0, end = arr.size()-1, mid = end/2;
+    while(beg <= end){
+        
+    }
+}
 
+int pen(int pos){
+    if(arr.empty()) {
+        arr.insert(pos);
+        return 0;
+    }
 }
 
 int dist(int a, int b){
