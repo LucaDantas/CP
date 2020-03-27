@@ -3,7 +3,7 @@ using namespace std;
 
 #define MAXN 1100
 
-int a[MAXN], f[MAXN];
+long long a[MAXN], f[MAXN];
 
 int main(){
     int n, k, m;
