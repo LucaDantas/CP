@@ -9,7 +9,7 @@ int dp[MAXN][MAXN];
 //The dp works like dp[Number of boxes already used][last element used]
 
 int main(){
-    int n, ans = 0;
+    int n, ans = -1;
     scanf("%d", &n);
     for(int i = 0, p, r; i < n; i++){
         scanf("%d%d", &p, &r);
@@ -24,7 +24,7 @@ int main(){
     for(int i = 0; i < n; i++){
         int r = -v[i].first - v[i].second;
         if(r < 0) continue;
-        ans = 1;
+        ans = 0;
         dp[0][i] = r;
     }
     for(int i = 0; i < n; i++){
