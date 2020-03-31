@@ -32,7 +32,7 @@ int main(){
             if(dp[i][j] == -1) continue;
             ans = i;
             for(int k = j+1, r; k < n; k++){
-                r = min(dp[i][j], -v[i].first) - v[i].second;
+                r = min(dp[i][j], -v[k].first) - v[k].second;
                 if(r < 0) continue;
                 dp[i+1][k] = max(dp[i+1][k], r);
             }
