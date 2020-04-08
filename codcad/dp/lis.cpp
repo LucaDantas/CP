@@ -2,35 +2,25 @@
 using namespace std;
 
 #define MAXN 1010
-#define INF 10000
+#define INF 1e9 + 100
 vector<int> v;
 int tab[MAXN][MAXN], n;
 
-int dp(int i, int k){
-	if(k == 0) return 0;
-	if(n-i < k) return INF;
-	if(tab[i][k] != -1) return tab[i][k];
-	int coloca = (v[i] <= dp(i+1, k-1))? max(v[i], dp(i+1, k-1)) : INF;
-	int nao_coloca = dp(i+1, k);
-	return min(coloca, nao_coloca);
+int dp(int i, int last){
+	if(i == n+1) return 0;
+	if(tab[i][last] != -1) return tab[i][last];
+	int coloca = (v[last] <= v[i])? 1+dp(i+1, i) : 0;
+	int nao_coloca = dp(i+1, last);
+	return tab[i][last] = max(coloca,nao_coloca);
 }
 
 int main(){
 	scanf("%d", &n);
-	v.resize(n);
+	v.resize(n+1);
 	memset(tab, -1, sizeof tab);
-	for(int i = 0; i < n; i++){
+	v[0] = 0;
+	for(int i = 1; i <= n; i++){
 		scanf("%d", &v[i]);
 	}
-	int i = n;
-	while(i > 0){
-		printf("%d\n", dp(0,i));
-		if(dp(0,i) < INF){
-			printf("%d\n", i);	
-			break;
-		}
-		i--;
-	}
-	if(i == 0) 
-		printf("%d\n", i);
+	printf("%d\n", dp(1,0));
 }
