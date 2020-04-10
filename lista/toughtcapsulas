@@ -1,0 +1,5 @@
+We'll do a binary searched answer in this one
+
+I'll describe every process inside the bsa:
+
+We take the number in the middle and we calculate the value of each capsule divided by that middle element and sum all those values up. If the value we get is greater or equal to the value we need we store it as a possible answer and we compute it again but with right = middle-1, if the value we find is smaller we compute it again but with left = middle+1. We do this repetitiion until left > right
