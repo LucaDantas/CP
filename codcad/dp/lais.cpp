@@ -2,7 +2,6 @@
 using namespace std;
 
 #define MAXN 1010
-#define INF 1e9 + 100
 vector<int> v;
 int tab[MAXN][MAXN], n;
 
