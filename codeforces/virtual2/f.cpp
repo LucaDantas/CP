@@ -15,6 +15,15 @@ using namespace std;
 
 const int maxn = 1e5 + 100;
 
+vector<int> g[maxn];
+
 int main(){
 	FAST;
+	int n, m;
+	cin >> n >> m;
+	for(int i = 1, a, b; i < m; i++){
+		cin >> a >> b;
+		g[a].pb(b);
+		g[b].pb(a);
+	}
 }

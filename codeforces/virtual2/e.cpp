@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define int long long
 #define pb push_back
 #define endl '\n'
 #define ll long long
