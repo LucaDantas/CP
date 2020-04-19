@@ -66,6 +66,7 @@ int main(){
 	cin >> n >> m;
 	for(int i = 0, a, b; i < m; i++){ //CERTO
 		cin >> a >> b;
+		a--,b--;
 		//We start with everything false (back-edge)
 		//and then we run dfs to create the dfs-tree setting the span-edges
 		g[a].pb(mp(b,false));
