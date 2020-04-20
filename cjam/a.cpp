@@ -28,48 +28,28 @@ const int mx[] = {1, -1, 0, 0}, my[] = {0, 0, 1, -1};
 string ans = "";
 
 void solve(){
-	int x,y, i=0;
+	int x,y;
 	cin >> x >> y;
 	if((x+y)%2==0){
 		cout << bad << endl;
 		return;
 	}
-	while(i++ < 10){
+	while(true){
 		rep(k, 0, 4){
 			if(mp(mx[k], my[k]) == mp(x,y)){
 				ans.pb(d[k]);
-				cout << "OI";
 				return;
 			}
 		}
 		rep(k, 0, 4){
 			int dx = x - mx[k], dy = y - my[k];
-			if((dx)%2 == 0 && (dy)%2 == 0 && ((dx+dy)/2)%2==1){
+			if((dx)%2 == 0 && (dy)%2 == 0 && ((dx+dy)/2)%2!=0){
 				ans.pb(d[k]);
 				x = dx/2;
 				y = dy/2;
+				break;
 			}
 		}
-		//if(x%2==1){
-			//if((((x+1)/2)+y)%2 == 1){
-				//x = (x+1)/2;
-				//y /= 2;
-			//}
-			//else{
-				//x = (x-1)/2;
-				//y /= 2;
-			//}
-		//}
-		//else{
-			//if((((y+1)/2)+x)%2 == 1){
-				//y = (y+1)/2;
-				//x /= 2;
-			//}
-			//else{
-				//y = (y-1)/2;
-				//x /= 2;
-			//}
-		//}
 	}
 }
 
@@ -78,9 +58,10 @@ int main(){
 	int t;
 	cin >> t;
 	rep(tt, 1, t+1){
+		ans.reserve(40);
 		cout << "Case #" << tt << ": ";
 		solve();
 		cout << ans << endl;
-		ans = "";
+		ans.clear();
 	}
 }
