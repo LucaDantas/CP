@@ -1,0 +1,11 @@
+How to do this mudefuke hard question
+
+(AT FIRST WE'LL SIMPLIFY THE QUESTION TO MAKE IT ONLY ONE DIMENSIONAL)
+
+We take the input and order it by the x values and over it we do a binary search to find the answer, and as a parameter for the binary search we will take a fixed value D, which is how many differences between two items are smaller or equal to it. The answer will be the value D that has exactly k items smaller or equal to him.
+
+The tricky part of the question is to find the number of items whose difference is smaller or equal to that treshold that we want. Considering that it is uni-dimensional we could iterate through the sorted array using two pointers and we know that every item inside the interval determined by (l = last item (to the left)) that minus the item in (r = item base of the iteration) have a difference <= D (the value of the difference we want). If we run throught  the entire array like this we'll get how many item differences are smaller or equal to the value D we want. This method works perfectly if we want to consider only the x-coordinate, but we have to consider also the values in the Y-coordinate whose differences to the base item in position R are smaller or equal to D. The first important observation is that we only need to consider the values that are to the left of the value in L. To compute those differences we'll need to use a BIT.
+
+To use the BIT to count it we'll add as we go through the array with the left pointer we add the value Y of the coordinate of that pointer to the BIT and every on every right pointer we count how many items are in the interval [ptr.y - D .. ptr.y + D], which represents the values whose differences to the one we're considering right now are smaller or equal to that value D we want.
+
+That's it for that question, it actually looks like a question that was asked in the TST for IOI in 2017, but a little bit harder but still really nice to think about
