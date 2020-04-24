@@ -25,7 +25,8 @@ typedef vector<int> vi;
 
 const int maxn = 1e5 + 100;
 
-int n, k, bit[maxn+1];
+int n, bit[maxn+1];
+ll k;
 
 pii pt[maxn];
 
@@ -41,22 +42,26 @@ int query(int x){
 	return ans;
 }
 
-int check(int v){
-	int ptr=0, ret = 0;
+ll check(int v){
+	clr(bit, 0);
+	int ptr = 1;
+	ll qtd = 0;
 	for(int i = 1; i <= n; i++){ //That's the right pointer
-		for(; ptr < i && pt[i].x - pt[ptr].x > v; ptr++)
+		for(; ptr <= i && pt[i].x - pt[ptr].x > v; ptr++) //left pointer
 			update(pt[ptr].y, 1);
-		
+		qtd += 1ll*(i-ptr);
+		qtd += 1ll*(query(min(maxn, pt[i].y+v)) - query(max(0, pt[i].y-v-1)));
 	}
+	return qtd;
 }
 
 int bs(){
-	int l = 1, r = n, ans = 0;
+	int l = 1, r = maxn, ans; //REMEMBER TO ALWAYS USE MAXN FOR THE RIGHT BORDER
 	while(l <= r){
 		int mid = ((l+r)>>1);
-		if(check(m) >= k){
-			ans = m;
-			r = mid -1;
+		if(check(mid) >= k){
+			ans = mid;
+			r = mid -1;      
 		}
 		else l = mid+1;
 	}
@@ -70,6 +75,6 @@ int main(){
 		cin >> a >> b;
 		pt[i] = {a, b};
 	}
-	sort(all(pt));
+	sort(pt+1, pt+1+n);
 	cout << bs() << endl;
 }
