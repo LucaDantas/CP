@@ -16,6 +16,7 @@ typedef vector<int> vi;
 #define dec(i,n,a) for(int i=(n); i>=(a); i--)
 #define read(v, a, b) for(int i=(a); i<(b); i++) cin>>v[i]
 #define printv(v, a, b) for(int i=(a); i < (b); i++) cout << v[i] << ' '
+#define printvec(v) for(int i=0; i < sz(v); i++) cout << v[i] << ' '
 #define clr(a,v) memset(a, v, sizeof(a))
 #define all(a) (a).begin(),(a).end()
 #define FAST cin.tie(0), cout.tie(0), ios::sync_with_stdio(0)
@@ -23,25 +24,42 @@ typedef vector<int> vi;
 #define db(x) cerr << #x << " == " << x << endl
 #define _ << " " <<
 
-const int maxn = 1e5 + 100;
-vi m, c, lim, nums;
+vi c;
+vector<vi> connard;
+multiset<int, greater<int>> s;
 
 int main(){
 	FAST;
 	int n, k;
 	cin >> n >> k;
-	nums.resize(k+1);
-	lim.resize(k+1);
-	m.resize(n+1);
-	c.resize(k+1);
-	for(int i = 1; i <= n; i++)
-		cin >> m[i];
-	for(int i = 1; i <= k; i++)
+	c.resize(k);
+	for(int i = 0, a; i < n; i++){
+		cin >> a;
+		s.insert(a);
+	}
+	for(int i = 0; i < k; i++){
 		cin >> c[i];
-	lim[1] = c[0];
-	for(int i = 2; i <= k; i++)
-		lim[i] = min(lim[i-1], c[i]);
-	for(int i = 1; i <= n; i++)
-		nums[it]++; 
-	
+	}
+	reverse(all(c));
+	while(s.size()){
+		int offset=0;
+		vi putain;
+		auto itr_baixo = upper_bound(all(c), offset);
+		while(itr_baixo != c.end()){
+			int x = c.end()-itr_baixo;
+			auto it_cima = s.lower_bound(x);
+			if(it_cima == s.end()) break;
+			putain.pb(*it_cima);
+			s.erase(it_cima);
+			itr_baixo = upper_bound(all(c), ++offset);
+		}
+		connard.pb(putain);		
+	}
+	cout << connard.size() << endl;
+	for(auto top : connard){
+		cout << top.size() << ' ';
+		for(auto it : top)
+			cout << it << ' ';
+		cout << endl;
+	}
 }
