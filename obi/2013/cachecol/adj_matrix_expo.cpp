@@ -36,13 +36,23 @@ matrix operator *(matrix a, matrix b) {
 	return c;
 }
 
+matrix identity(int siz){
+	matrix ret(siz, vector<ll>(siz));
+	for(int i = 0; i < siz; i++)
+		for(int j = 0; j < siz; j++)
+			if(i==j)
+				ret[i][j] = 1;
+	return ret;
+}
+
 matrix power(matrix A, ll p){
-	if(p==1)
-		return A;
-	if(p%2)
-		return (A * (power(A, p-1)));
-	matrix X = power(A, (p>>1));
-	return X*X;
+	matrix ret = identity(sz(A));
+	while(p > 0){
+		if(p&1) ret = ret*A;
+		A = A*A;
+		p>>=1;
+	}
+	return ret;
 }
 
 bool operator !=(trio a, trio b){
