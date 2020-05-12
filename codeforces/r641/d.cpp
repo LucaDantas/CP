@@ -23,8 +23,6 @@ typedef vector<ll> vll;
 
 const int maxn = 1e5 + 100;
 
-//int a[maxn];
-
 vi a;
 
 int n, k;
@@ -35,16 +33,16 @@ int main(){
 	while(t--){
 		cin >> n >> k;
 		a = vi(n);
-		vi pos;
+		int tem = 0;
 		rep(i,0,n){
 			cin >> a[i];
-			if(a[i] == k) pos.pb(i);
+			if(a[i] == k) {tem=1;}
 		}
 		bool broke = false;
-		if(pos.empty()) {cout << "no\n"; continue;}
+		if(!tem) {cout << "no\n"; continue;}
 		if(n==1) {cout << "yes\n"; continue;}
 		for(int i = 1; i < n; i++)
-			if(a[i] >= k && a[i-1] >= k) {cout << "yes\n"; broke = true; break;}
+			if((a[i] >= k && a[i-1] >= k) || ((i >= 2 && a[i] >= k && a[i-2] >= k))) {cout << "yes\n"; broke = true; break;}
 		if(!broke) cout << "no\n";
 	}
 }

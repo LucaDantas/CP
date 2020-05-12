@@ -30,7 +30,7 @@ vi dp;
 int solve(int i){
 	if(i > n) return 0;
 	if(dp[i] != -1) return dp[i];
-	int best = 0, cont = i;
+	int best = 1, cont = i;
 	while(i+cont <= n){
 		if(a[i] < a[i+cont]){
 			best = max(best, 1+solve(i+cont));
@@ -47,7 +47,9 @@ int main(){
 		cin >> n;
 		read(a,1,n+1);
 		dp = vi(n+1, -1);
-		solve(1);
-		cout << *max_element(all(dp))+1 << '\n';
+		int ans = 0;
+		for(int i = 1; i <= n; i++)
+			ans = max(ans, solve(i));
+		cout << ans << '\n';
 	}
 }
