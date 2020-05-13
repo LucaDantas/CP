@@ -1,7 +1,0 @@
-We have an undirected weighted graph
-
-Compute the minimum price to see the show (cost a_i on each city) starting from every city on the graph, and you have to go and then come back cost 2*w_i per edge
-
-approach: start a multisource dijkstra with every single city starting with the value to watch the show there and find the "Shortest path" to every other city, which in this case won't be a real path but when we "relax" a path we are saying that it is better to start in another city and then go to the one we're analyzing in the moment
-
-In the end just print the "shortest path" or "distance" in the conventional dijkstra of each vertex
