@@ -61,7 +61,8 @@ inline void dijkstra(){
 				int v = pp.ff;
 				int w = pp.ss;
 				
-				q.push({d + w*1ll, v});
+				if(qtd[v] < 2)
+					q.push({d + w*1ll, v});
 			}
 		}
 	}
