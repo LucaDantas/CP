@@ -28,17 +28,8 @@ int main(){
 	int n,s;
 	cin >> n >> s;
 	if(s < n*2){ cout << "NO\n"; return 0;}
-	//odd
 	cout << "YES\n";
-	if(s&1){
-		cout << s-((n-1)*2);
-		rep(i,1,n) cout << " 2";
-		cout << "\n1\n";
-	}
-	//even
-	else{
-		cout << s-((n-1)*2);
-		rep(i,1,n) cout << " 2";
-		cout << "\n1\n";
-	}	
+	cout << s-((n-1)*2);
+	rep(i,1,n) cout << " 2";
+	cout << "\n1\n";
 }
