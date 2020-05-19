@@ -1,0 +1,18 @@
+We need to calculate the dp[l][r] for every interval l,r, and  we return true if we can merge those two or false otherwise. We should also return the value of the interval but outside of the dp cause that will be important to merge the next top intervals (we can pass them by reference to make it easier), and in the transition we do just like in the slimes problem and iterate from l through r and check if both of them can be merged into one and if that's the case if we can merge both of them
+
+Below is the proof that every interval if possible to be merged into one will only have one single possible value
+
+Our induction base is the case when the interval only has two items, which clearly can only get one possible value, which is value of one of those + 1 (Considering that they're the same, if they're not we can't merge them)
+
+Assume inductively that we can divide a big interval into exactly two and also assume inductively that these have only one possible result, which leaves us with two possibilities, either the two intervals have different values, in which doesn't continue in the recursion because we can't combine them or they have exactly the same value, which only leaves us with one possibility of the value if the big interval that we were considering initially, which is exaclty the value of one of those intervals +1.
+
+I think that we need to first calculate that dp to see which intervals can be merged and then we get all of those intervals that we see can be merged and try to build the interval with the least number of segments, that is we create another dp on top of the first one to calculate the min number of segments we can get with that merging possibilities.
+
+The first part is O(n³) because we have n² states and we use n in the transition just like in the slimes and for the last one I think we can still do it in less or equal to n³, I'll explore the algo down below
+
+Second part of the algo - knowing which intervals can be merged and which can't we find the min number of independent segments:
+To calculate this we create another dp[l][r] that'll return the minimum number of diferent segments inside the interval [l..r], and for each state we iterate from l through r and that point is where we're going to divide (just like in the slime question) and add up the number of intervals of the left + the right sides.
+
+The base cases are when the interval [l..r] can be merged into one, when we have only one item (aka l==r), in both we return 1, or l>r => return 0, which shouldn't even happen but we add it just in case, or the normal memoization of the dp that is if dp[l][r] != -1 return dp[l][r];
+
+To get the answer we calculate dp[1][n] in the second process after having applied the first one
