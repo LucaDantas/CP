@@ -53,6 +53,9 @@ void dijkstra(int s){
 		int u = q.top().ss;
 		q.pop();
 		
+		if (mark[u]) continue;
+		mark[u] = 1;
+		
 		for(auto pp : g[u]){
 			int v = pp.ff.ff;
 			int w = pp.ff.ss;
