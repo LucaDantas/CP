@@ -84,8 +84,6 @@ int main(){
 	rep(i,1,n+1)
 		rep(j,i,n+1)
 			solve(i,j);
-	
-	solve(1,n);
 
 	int ans = -1;
 	
