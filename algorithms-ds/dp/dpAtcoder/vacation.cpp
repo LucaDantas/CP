@@ -1,32 +1,41 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 100100
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<int, pii> piii;
+typedef vector<int> vi;
+typedef vector<ll> vll;
 
-int value[4][MAXN], dp[4][MAXN];
+#define pb push_back
+#define mp make_pair
+#define ff first
+#define ss second
+#define sz(a) ((int)(a).size())
+#define rep(i,a,b) for(int i=(a); i<(b); i++)
+#define trav(it, a) for(auto& it : a)
+#define allin(it, a) for(auto it : a)
+#define read(v, a, b) for(int i=(a); i<(b); i++) scanf("%d", &v[i]);
+#define clr(a,v) memset(a, v, sizeof(a))
+#define all(a) (a).begin(),(a).end()
+#define FAST cin.tie(0), cout.tie(0), ios::sync_with_stdio(0)
+#define db(x) cerr << #x << " == " << x << endl
+
+const int maxn = 1e5 + 100;
 
 int main(){
-    int n;
-    cin >> n;
-    for(int i = 1; i <= n; i++){
-        cin >> value[1][i] >> value[2][i] >> value[3][i];
-    }
-    fill(dp[1], dp[1]+n+1, -1);
-    fill(dp[2], dp[2]+n+1, -1);
-    fill(dp[3], dp[3]+n+1, -1);
-    dp[1][1] = 0;
-    dp[2][1] = 0;
-    dp[3][1] = 0;
-    for(int i = 1; i < n; i++){
-        for(int j = 1; j <= 3; j++){
-            for(int k = 1; k <= 3; k++){
-                if(j == k) continue;
-                dp[k][i+1] = max(dp[k][i+1], dp[j][i] + value[k][i]);
-            }
-        }
-    }
-    dp[1][n] += max(value[2][n], value[3][n]);
-    dp[2][n] += max(value[1][n], value[3][n]);
-    dp[3][n] += max(value[2][n], value[1][n]);
-    cout << max(dp[1][n], max(dp[2][n], dp[3][n])) << endl;
+	int n; scanf("%d", &n);
+	vector<int> dp(3);
+	rep(k,0,n){
+		vector<int> a(3);
+		trav(it, a)
+			scanf("%d", &it);
+		vector<int> new_dp(3, -1);
+		rep(i,0,3)
+			rep(j,0,3)
+				if(i != j)
+					new_dp[i] = max(new_dp[i], dp[j] + a[i]);
+		dp = new_dp;
+	}
+	printf("%d\n", max({dp[0], dp[1], dp[2]}));
 }
