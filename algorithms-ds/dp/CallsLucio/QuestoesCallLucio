@@ -1,0 +1,22 @@
+https://codeforces.com/blog/entry/70018
+
+
+Restricted permutations - CSA
+Se ele vem depois então a gente tem q fazer o update pegando todos os valores de i-1 indo de [1..pos-1] já que se tivesse na posição pos, que é a que a gente quer inserir o valor i o valor i-1 ficaria na posição i+1, então não da certo. Pra fazer isso a gente pega o prefix sum que já tinha sido feito update na 'rodada' passada e com isso a gente pega pref[pos-1] e não subtrai nada mesmo não porque vai ter q pegar do primeiro mesmo, e a gente faz isso para todas as posições pos então fica O(n) a transição usando a prefix sum que também é O(n) pra calcular. Lembrando que se a gente for usar só O(n) de memória usando o mesmo vetor a gente tem q iterar da direita pra esquerda (aka decrescente) já que quando a gente alterar um valor ele não pode ser contado mais uma vez já que o valor que tã nele já é da proxima 'rodada'
+
+Caso seja o estado oposto basta inverter tanto a ordem da iteração como o estado pra pegar na prefix sum, ou seja a gente faz a iteração normalmente da esquerda pra direita e pega todos os valores na prefix sum de pref[fim] - pref[pos-1]. Não vou codar agr pq já ta tarde e n to com vontade, mas cou escrever a ideia dos outros pra só codar amanha.
+
+Projects - CSES
+We want to find the biggest window of non-intersecting segments whose sum of values is maximized
+
+We can do it in two ways:
+
+First one is the recursive dp, in which I'd tought, which is to at the beginning sort all the items in the order of the time they begin (aka the value of a), and the value of each dp would be max(dp(i+1), dp(j) + pi), where j is the first value with aj > bi and we can find it in a binary search over the array with the values of 'a' ordered.
+
+The other and faster way that lucio showed is to do it iteratively, and at the beginning we do a coordinate compression with each value pointing to a different one in the interval [1..4*10⁵] , which we can do a dp over with one state. The value of dp[i] = max(dp[i+1], dp[bi(compressed) + 1], and for us to be able to do it, we must to the iteration from the end to the beginning (aka decrescent)
+
+Caminhos - Seletiva IOI
+
+This is a classic problem from a 'grid dp', but with a simple modification from the most famous one, in which we can only move down or right, because in this one we can move down, right and also left, which means that it is a little bit more complicated but still simple, because we can simply do it row by row and in each row we save the best value either coming from the left or coming from the right, and we compute each one separatedly, always also checking if it's better to just come straight from the top. And then after we've finished that row we can simply skipp to the next one considering the top one the previous one.
+
+Now I just have to code it
