@@ -1,0 +1,7 @@
+O que temos que fazer:
+
+Como podemos repetir edges a gente só precisa achar o menor caminho entre a e b com distância par e o menor caminho entre a e b com distância impar pq a gente pode ir sempre aumentando de 2 em dois por meio de precursos como esse: u -> v -> u, e depois continuar, o que aumenta o caminho em duas unidades. Desse modo a gente só precisa calcular primeiro a distância na arvore normal entre a ~~> b e salvar esse valor, depois calcular distancia a ~~> (x e y) + 1 + (y e x) ~~> b, o que vai ser o caminho passando por essa aresta e também podemos considerar fazer um ciclo por essa nova aresta, ou seja, ir de x ~~> y pelo caminho normal (passando pelo lca) + 1, e pode valer a pena fazer esse ciclo caso a gente n tenha uma das paridades necessarias, por exemplo a ~~> b é par e a ~~> x + 1 + y ~~> b sejam impares, e caso a gente faça um ciclo a gente adiciona um valor impar, ou seja só vai ser interessante fazer esse ciclo caso x ~~> y + 1 seja ímpar.
+
+Então a gente considera o menor caminho par e o menor caminho ímpar (se algum dos dois não existir só colocar infinito), e pega a paridade do valor q quer é compara com o menor da mesma paridade, se for maior ou igual printa YES, senão printa NO
+
+PS: Eu n codei pq precisa de lca pra calcular a distancia de 2 vertices mas depois quando eu vir como coda lca eu escrevo

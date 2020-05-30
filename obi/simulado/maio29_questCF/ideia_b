@@ -1,0 +1,26 @@
+N sei realmente é braba essa quest
+
+Achar maior intervalo com exatamente um erro
+
+A gente pode definir esse erro com uma flag mas como??
+
+a gente teria q fazer uma flag pra cada intervalo e uma flag pra cada inicio 
+
+Primeiro comprime as coordenadas, mas se forem todas diferentes já n vai mudar nd
+
+será q é fazer pra cada quantidade de repetições?
+
+
+Dá pra fazer fácil o número de caras diferentes q já apareceram, só salvar um vetor (tamanho 10⁵ entao da dboa) de quantas vezes cada cara já apareceu, e pra saber qual o elemento q apareceu mais vezes a gente vai salvar pra saber qual foi o q apareceu mais vezes uma variavel máximo, que salva o maior número de aparições contando todos os valores, e toda vez que a gente chegar em algum novo número a gente atualiza essa variavel, sempre mantendo o máximo
+
+primeiro caso de teste, 
+
+Tests:
+
+1-
+if #1's == 1:
+	diff-1 = (n-1)/max
+	
+2-
+else
+	diff = (n-1)/(max-1)
