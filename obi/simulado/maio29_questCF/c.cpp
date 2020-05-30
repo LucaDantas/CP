@@ -46,9 +46,9 @@ int main(){
 	scanf("%lld %lld %lld", &a, &b, &c);
 	vll ans;
 	
-	for(ll s = 1; s <= 64; s++) {
+	for(ll s = 1; s <= 81; s++) {
 		ll valor = b * power(s, a) + c;
-		if(valor > 0 && soma(valor) == s)
+		if(valor > 0 && valor <= 1000000000 && soma(valor) == s)
 			ans.pb(valor);
 	}
 	printf("%d\n", sz(ans));

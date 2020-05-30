@@ -23,31 +23,27 @@ typedef vector<ll> vll;
 
 const int maxn = 1e5 + 100;
 
-int a[maxn], vzs[maxn], count1, mx, diff;
+int a[maxn], vzs[maxn], cnt[maxn], mx;
 
 int main(){
 	int n;
 	scanf("%d", &n);
-	read(a,0,n);
-	int ans = 1;
-	mx = 1;
-	vzs[a[0]] = 1;
-	count1 = 1;
-	diff = 1;
-	rep(i,1,n) {
+	read(a,1,n+1);
+	int ans;
+	mx = 0;
+	cnt[0] = n;
+	rep(i,1,n+1) {
 		int & now = vzs[a[i]];
-		if(now == 1)
-			count1--;
-		if(now == 0)
-			diff++, count1++;
-		mx = max(mx, now+1);
+		cnt[now]--;
 		now++;
-		if(mx == 1)
-			ans = i+1;
-		else if(count1 == 1 && (diff-1) == (i)/mx && (i)%mx == 0)
-			ans = i+1;
-		else if(diff == (i)/(mx-1) && i%(mx-1) == 0)
-			ans = i+1;
+		cnt[now]++;
+		mx = max(mx, now);
+		if(cnt[1] == i || cnt[i] == 1)
+			ans = i;
+		else if(cnt[1] == 1 && mx * cnt[mx] == i - 1)
+			ans = i;
+		else if(cnt[mx] == 1 && cnt[mx-1] * (mx - 1) == i - mx)
+			ans = i;
 	}
 	printf("%d\n", ans);
 }
