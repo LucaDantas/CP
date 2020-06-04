@@ -1,0 +1,12 @@
+https://codeforces.com/contest/459/problem/E
+That is the problem that motivated
+
+The idea to solve it is at the beginnig calculate the value for each edge of every path, and then after finishing a node completely we can save the values of the edges in increasing order and do a 'suffix max' array in such a way that if we ever get to that node one more time we can only do a binary search in the ordered array of the edges weight and get the best value in just by consulting that suffix max array.
+
+The idea behind all this is to save a dp-like value that is the longest value starting from that edge, and we can do this because we don't care about what came before, only the last value, which means that in the transition we can look 
+
+We could also do the simpler way that is to just check in linear time the best value for each node, but that would imply in a complexity of n*m, because every time we get to a vertex we need to look at all of its neighbours, and if we have the situation where we have m/2 edges pointing into a node and m/2 edges pointing out of that same node we'd get m², which is too slow, we could also save in that way I said before, which might actually work if we start computing from the greatest value of that node, which means that we'd never repeat that guy more than once and when we're at a lower guy if we ever encounter in a cycle inside the recursion that same node again we'd encounter a node that we've already computed before, which means that the recursion would return and there would be no cycles. We would also be able to create those suffix max array and the array of max elemets online, which deals with the problem of the cycles inside the recursion if we've not finished yet the computation of that node and we could simply do a binary search on whatever the max suffix array we have know, because we simply don't care about the smaller values that were not computed yet.
+
+That seems just fine but I'm too lazy to code it right now bc it seems complicated and because I'm tired
+
+(btw I should have solved the D from this contest but when I read this one it seemed a lot nicer to think about because the other one was a simple modified version of the invertios count and I just didn't care enough to code)
