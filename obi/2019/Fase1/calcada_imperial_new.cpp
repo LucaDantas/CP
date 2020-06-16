@@ -9,22 +9,36 @@ typedef vector<ll> vll;
 
 #define pb push_back
 #define mp make_pair
-#define endl '\n'
 #define ff first
 #define ss second
 #define sz(a) ((int)(a).size())
 #define rep(i,a,b) for(int i=(a); i<(b); i++)
-#define read(v, a, b) for(int i=(a); i<(b); i++) cin>>v[i]
+#define trav(it, a) for(auto& it : a)
+#define allin(it, a) for(auto it : a)
+#define read(v, a, b) for(int i=(a); i<(b); i++) scanf("%d", &v[i]);
 #define clr(a,v) memset(a, v, sizeof(a))
 #define all(a) (a).begin(),(a).end()
 #define FAST cin.tie(0), cout.tie(0), ios::sync_with_stdio(0)
 #define db(x) cerr << #x << " == " << x << endl
-#define _ << " " <<
 
-const int maxn = 1e5 + 100;
+const int maxn = 550;
+
+int a[maxn], n;
+
+int cnt(int x, int y) {
+	int last = -1, ans = 0;
+	rep(i,0,n) {
+		if((a[i] != x && a[i] != y) || a[i] == last) continue;
+		ans++;
+		last = a[i];
+	}
+	return ans;
+}
 
 int main(){
-	ll n; scanf("%lld", &n);
-	ll ans = (1ll << n)+1;
-	printf("%lld\n", ans*ans); 
+	int ans = -1;
+	scanf("%d", &n);
+	read(a,0,n);
+	rep(i,1,n+1) rep(j,i,n+1) ans = max(ans, cnt(i,j));
+	printf("%d\n", ans);
 }
