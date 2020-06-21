@@ -3,9 +3,7 @@ using namespace std;
 
 typedef long long ll;
 typedef pair<int, int> pii;
-typedef pair<int, pii> piii;
 typedef vector<int> vi;
-typedef vector<ll> vll;
 
 #define pb push_back
 #define mp make_pair
@@ -13,6 +11,7 @@ typedef vector<ll> vll;
 #define ss second
 #define sz(a) ((int)(a).size())
 #define rep(i,a,b) for(int i=(a); i<(b); i++)
+#define dec(i,a,b) for(int i=(a); i>=(b); i--)
 #define trav(it, a) for(auto& it : a)
 #define allin(it, a) for(auto it : a)
 #define read(v, a, b) for(int i=(a); i<(b); i++) scanf("%d", &v[i]);
@@ -21,7 +20,7 @@ typedef vector<ll> vll;
 #define FAST cin.tie(0), cout.tie(0), ios::sync_with_stdio(0)
 #define db(x) cerr << #x << " == " << x << endl
 
-const int maxn = 1e5 + 100;
+std::mt19937 rng((int) std::chrono::steady_clock::now().time_since_epoch().count());
 
 int main(){
 	
