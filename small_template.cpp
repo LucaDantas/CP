@@ -5,14 +5,20 @@ using pii = pair<int, int>;
 using vi = vector<int>;
 
 #ifdef MY_DEBUG_FLAG
-#define db(...) cerr << "DEBUG( " << #__VA_ARGS__ << " == " << __VA_ARGS__ << " )" << endl
+template<typename T> void debug(T a) { cerr << a << ' '; }
+template<typename T, typename U> void debug(pair<T, U> a) { cerr << a.first << ' ' << a.second << ' '; }
+template<typename T> void debug(vector<T> a) { for(auto it : a) debug(it);}
+template<typename T> void debug(set<T> a) { for(auto it : a) debug(it);}
+#define db(a) cerr << "DEBUG ( " << #a << " == "; debug(a); cerr << ")\n"
 #else
 #define db(...)
-#endif // define(MY_DEBUG_FLAG)
+#endif
 
-#define pb emplace_back
+#define pb push_back
+#define eb emplace_back
 #define ff first
 #define ss second
+#define fast ios_base::sync_with_stdio(false), cout.tie(nullptr), cin.tie(nullptr)
 #define sz(a) ((int)(a).size())
 #define rep(i,a,b) for(int i=(a); i<(b); i++)
 #define dec(i,n,a) for(int i=(n); i>=(a); i--)
