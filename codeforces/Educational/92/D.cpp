@@ -55,6 +55,10 @@ int main() {
 			cout << "0\n"; continue;
 		}
 
+		if(area + bridge == 0) {
+			cout << 2*k << '\n'; continue;
+		}
+
 		ll precisa = k / (area+bridge);
 
 		precisa = min(n, precisa);
