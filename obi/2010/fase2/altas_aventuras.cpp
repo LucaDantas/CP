@@ -1,6 +1,6 @@
 /* 
 	
-	Altas Aventuras - OBI 2015
+	Altas Aventuras - OBI 2010
 	O(sqrt(n) * log(k))
 
 	fast nice amazing agnez version
