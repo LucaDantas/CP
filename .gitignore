@@ -1,6 +1,8 @@
 cf_template
 *.pdf
 long_template.cpp
+in
+out
 in1*
 in2*
 in3*
