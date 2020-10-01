@@ -9,25 +9,6 @@ constexpr int maxn = 1e6+10;
 struct SegmentTree {
 	struct Matrix {
 		int mat[4][4];
-		
-		Matrix(){ memset(mat, 0, sizeof mat); }
-		
-		Matrix(int a) {
-			memset(mat, 0, sizeof mat);
-			if(a == 1) {
-				// 1 -> com os dois blocos pretos
-				mat[0][0] = 1;
-			} else if(a == 2) {
-				// 2 -> com o bloco de cima preto
-				mat[0][1] = mat[1][0] = 1;
-			} else if(a == 3) {
-				// 3 -> com o bloco de baixo preto
-				mat[0][2] = mat[2][0] = 1;
-			} else {
-				// 4 -> com nada preto (tudo livre)
-				mat[0][0] = mat[0][3] = mat[1][2] = mat[2][1] = mat[3][0] = 1;
-			}
-		}
 
 		void set(int a) {
 			memset(mat, 0, sizeof mat);
@@ -60,21 +41,10 @@ struct SegmentTree {
 			}
 			return c;
 		}
-		
-//		friend ostream& operator<<(ostream& os, Matrix a) {
-//			for(int i = 0; i < 4; i++) {
-//				os << "[";
-//				for(int j = 0; j < 4; j++) {
-//					os << ' ' << a.mat[i][j];
-//				}
-//				os << " ]\n";
-//			}
-//			return os << "\n";
-//		}
 	} tree[4*maxn];
 
-	Matrix idt() {
-		Matrix a;
+	Matrix& idt() {
+		static Matrix a; memset(a.mat, 0, sizeof a.mat);
 		for(int i = 0; i < 4; i++) a.mat[i][i] = 1;
 		return a;
 	}
@@ -116,19 +86,14 @@ int tipo(int cima, int baixo) {
 }
 
 int main() {
-	ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
-//	int n, q; scanf("%d %d", &n, &q);
-	int n, q; cin >> n >> q;
+	int n, q; scanf("%d %d", &n, &q);
 	seg.build(1, 1, n);
 	while(q--) {
-//		int t, i, j; scanf("%d %d %d", &t, &i, &j);
-		int t, i, j; cin >> t >> i >> j;
+		int t, i, j; scanf("%d %d %d", &t, &i, &j);
 		if(t == 1) {
 			v[i-1][j] = 1 - v[i-1][j];
 			seg.upd(1, 1, n, j, tipo(v[0][j], v[1][j]));
-		} else {
-			cout << seg.query(1, 1, n, i, j).mat[0][0] << '\n';
-//			printf("%d\n", seg.query(1, 1, n, i, j).mat[0][0]);
-		}
+		} else
+			printf("%d\n", seg.query(1, 1, n, i, j).mat[0][0]);
 	}
 }
