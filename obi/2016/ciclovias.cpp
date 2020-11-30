@@ -29,6 +29,7 @@ struct Path
 		for(--it;; --it) {
 			if((*it).ss <= t)
 				rm.pb(*it);
+			else break;
 			if(it == st.begin()) break;
 		}
 		for(pii x : rm)
