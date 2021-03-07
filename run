@@ -1,0 +1,36 @@
+#!/bin/bash
+if [[ -z $1 ]]; then
+	echo "Give me the problem name"
+	exit 1;
+fi
+n=1000;
+gen=gen;
+test=test;
+slow=brute;
+p=$1;
+
+make "$gen" & make "$p" & make "$slow" & wait;
+
+mkdir -p ${test};
+rm test/*;
+
+for t in $(seq 1 $n); do
+	echo "Running test $t";
+	input_gen="${test}/${t}_gen.in";
+	out="${test}/${t}_${p}.out";
+	out_slow="${test}/${t}_${slow}.out";
+	./${gen} > $input_gen
+	./${p} < $input_gen > $out
+	./${slow} < $input_gen > $out_slow
+	if ! diff --brief --ignore-space-change ${out_slow} ${out} > lixo;
+	then
+		echo "Test $t failed FDDDDDDDD SEU GLD";
+		exit 1;
+	fi
+	echo "Test $t passed";
+	rm ${input_gen} ${out} ${out_slow}
+done
+
+rm lixo
+echo "DONE";
+exit 0;
