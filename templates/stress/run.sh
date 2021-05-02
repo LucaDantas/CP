@@ -21,11 +21,11 @@ then
   then
     k=$1;
   else
-    k=10;
+    k=2;
   fi;
 else
-  n=10;
-  k=10;
+  n=50;
+  k=2;
 fi;
 
 make "$p" & make "$gen" & make "$slow" & wait;
