@@ -32,14 +32,6 @@ constexpr int inf = 0x3f3f3f3f;
 constexpr int maxn = 1e5 + 10;
 constexpr int mod = 1000000007;
 
-// void maa(priority_queue<pii, vector<pii>, greater<pii>> q) {
-// 	while(q.size()) {
-// 		printf("%d %d\n", q.top().ff, q.top().ss);
-// 		q.pop();
-// 	}
-// 	puts("END");
-// }
-
 int main() {
 	int t; scanf("%d", &t);
 	while(t--) {
@@ -48,13 +40,11 @@ int main() {
 		vector<int> ans(n);
 		for(pii& x : a)
 			scanf("%d", &x.ff), x.ss = cnt++;
-		// db(a);
 		puts("YES");
 		priority_queue<pii, vector<pii>, greater<pii>> q;
 		for(int i = 0; i < m; i++)
 			ans[a[i].ss] = i+1, q.push({a[i].ff, i+1});
 		for(int i = m; i < n; i++) {
-			// maa(q);
 			auto opa = q.top(); q.pop();
 			opa.ff += a[i].ff;
 			ans[a[i].ss] = opa.ss;

@@ -58,11 +58,9 @@ int main() {
 		int opa = 0, tot = 0;
 		for(int i = 1; i <= n; i++)
 			tot += cnt[i] - (cnt[i]&1), opa += (cnt[i]&1);
-		// db(tot, opa, safe);
 		int gld = opa;
 		opa -= min(opa, safe);
 		safe -= min(gld, safe);
-		// db(tot, opa, safe, '\n');
 		tot -= min(safe, tot);
 		printf("%d\n", ans+opa+tot/2);
 	}

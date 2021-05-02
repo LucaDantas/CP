@@ -56,8 +56,6 @@ struct DSU
 vector<int> arestas;
 
 void dfs(int u) {
-	db(u);
-	// for(int i = 0; i < sz(g[u]); i++) {
 	while(g[u].size()) {
 		auto [v, id] = g[u].back();
 		v = dsu.find(v);
@@ -98,9 +96,4 @@ int main() {
 	puts("YES");
 	for(int animal : arestas)
 		printf("%d\n", animal+1);
-		// printf("%d %d\n", opa[animal].first, opa[animal].second);
 }
-
-	// for(int i = 1; i <= n; i++)
-	// 	printf("%d ", dsu.find(i));
-	// puts("");
