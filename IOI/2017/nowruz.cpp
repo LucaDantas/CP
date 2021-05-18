@@ -4,12 +4,20 @@
 #include <queue>
 #include <cstring>
 #include <random>
+#include <utility>
 
 #define maxn 1025
+
+constexpr int inf = 0x3f3f3f3f;
 
 int n, m;
 const int dx[] = {1, -1, 0, 0};
 const int dy[] = {0, 0, 1, -1};
+
+std::mt19937 rng(std::random_device{}());
+
+int rnd(int x) { return (int)(rng() % x + x) % x; }
+int rnd(int l, int r) { return l + rnd(r-l+1); }
 
 int k;
 struct GERA
@@ -17,37 +25,37 @@ struct GERA
 	FILE *result, *map_out;
 	char map[maxn][maxn], sv[maxn][maxn];
 	int mark[maxn][maxn], ans = 0;
-	void limpa(int x, int y) {
+	int limpa(int x, int y) {
+		int qtd = 0;
 		for(int i = 0; i < 4; i++) {
 			int nx = x + dx[i], ny = y + dy[i];
 			if(nx >= 0 && nx < n && ny >= 0 && ny < m) {
 				if(mark[nx][ny] != 2) {
-					++mark[nx][ny];
+					++mark[nx][ny]; ++qtd;
 					if(map[nx][ny] == '.' && mark[nx][ny] == 2)
-						map[nx][ny] = 'X';
+						map[nx][ny] = 'X', --qtd;
 				}
 			}
 		}
+		return qtd;
 	}
 
-	struct PAR
-	{
-		int x, y;
-	};
+	using PAR = std::pair<int, std::pair<int,int>>;
 
 	void bfs(int sx, int sy) {
 		mark[sx][sy] = 2; limpa(sx, sy);
-		std::queue<PAR> q;
-		q.push({sx, sy});
+		std::priority_queue<PAR> q;
+		q.push({0, {sx, sy}});
 		while(q.size()) {
-			int x = q.front().x, y = q.front().y; q.pop();
+			int x = q.top().second.first, y = q.top().second.second; q.pop();
 			int ok = 1;
 			for(int i = 0; i < 4; i++) {
 				int nx = x + dx[i], ny = y + dy[i];
 				if(nx >= 0 && nx < n && ny >= 0 && ny < m && map[nx][ny] == '.' && mark[nx][ny] != 2) {
 					ok = 0;
 					mark[nx][ny] = 2;
-					q.push({nx, ny}); limpa(nx, ny);
+					q.push({limpa(nx, ny), {nx, ny}});
+					// q.push({limpa(nx, ny) + rnd(2), {nx, ny}});
 				}
 			}
 			ans += ok;
@@ -91,12 +99,7 @@ struct GERA
 	}
 } gera;
 
-std::mt19937 rng(std::random_device{}());
-
-int rnd(int x) { return (int)(rng() % x + x) % x; }
-int rnd(int l, int r) { return l + rnd(r-l+1); }
-
-const int qtd = 100;
+const int qtd = 50;
 
 int main() {
 	gera.le();
