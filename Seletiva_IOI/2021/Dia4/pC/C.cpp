@@ -1,0 +1,102 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+using pii = pair<int,int>;
+
+#define ff first
+#define ss second
+#define pb push_back
+#define all(a) (a).begin(), (a).end()
+#define sz(a) (int)(a.size())
+
+constexpr int maxn = 300+10, mod = 1 << 30;
+
+long long ans = 0;
+
+void add(ll& a, long long x) {
+	x %= mod;
+	x += mod;
+	x %= mod;
+	a += (int)x;
+	a %= mod;
+}
+
+int power(int b, int e) {
+	int ans = 1;
+	while(e) {
+		if(e&1) ans = (int)(1ll * ans * b % mod);
+		b = (int)(1ll * b * b % mod);
+		e >>= 1;
+	}
+	return ans;
+}
+
+vector<pair<int,int>> todos;
+
+int n;
+
+ll cnt[maxn];
+
+int sinal(int x) { return x == (n-1)/2 ? 0 : x < (n-1)/2 ? -1 : 1; }
+
+struct SegmentTree
+{
+	vector<int> tree[4*maxn*maxn];
+	vector<vector<ll>> roolback;
+	void upd(int node, int i, int j, int l, int r, int v) {
+		if(i > r || j < l || r < l) return;
+		if(i >= l && j <= r) return (void)(tree[node].pb(v));
+		int m = (i+j) >> 1;
+		upd(node<<1, i, m, l, r, v);
+		upd(node<<1|1, m+1, j, l, r, v);
+	}
+	void build(int node, int i, int j) {
+		if(!roolback.size()) {
+			roolback.pb(vector<ll>(maxn, 0)), roolback[0][0] = 1;
+		}
+		vector<ll> dp = roolback.back(), new_dp(maxn, 0);
+		for(int v : tree[node]) {
+			new_dp[0] = dp[0] * (n - v);
+			for(int q = 1; q <= n; q++) {
+				new_dp[q] = dp[q] * (n - v) % mod;
+				add(new_dp[q], dp[q-1] * v);
+			}
+			swap(dp, new_dp);
+		}
+		if(i == j) {
+			long long aq = 0;
+			for(int q = 0; q <= n; q++)
+				add(aq, 1ll * todos[i].ff * dp[q] * sinal(q) % mod);
+			add(ans, aq);
+		} else {
+			roolback.push_back(dp);
+			int m = (i+j) >> 1;
+			build(node<<1, i, m); build(node<<1|1, m+1, j);
+			roolback.pop_back();
+		}
+	}
+} seg;
+
+int last[maxn];
+
+int main() {
+	scanf("%d", &n);
+	for(int i = 1; i <= n; i++) {
+		for(int j = 0, h; j < n; j++) {
+			scanf("%d", &h); todos.pb({h, i});
+		}
+	}
+	sort(all(todos));
+	int pos = 0;
+	for(auto p : todos) {
+		auto [h, ind] = p;
+		seg.upd(1, 0, n*n-1, last[ind], pos-1, cnt[ind]);
+		++cnt[ind];
+		last[ind] = ++pos;
+	}
+	for(int ind = 1; ind <= n; ind++)
+		seg.upd(1, 0, n*n-1, last[ind], n*n-1, cnt[ind]);
+	seg.build(1, 0, n*n-1);
+	printf("%lld\n", ans);
+}
