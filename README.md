@@ -1,2 +1,2 @@
 # CP
-Uns codigo lombrado ai de cp
+Competitive Programming Solutions
