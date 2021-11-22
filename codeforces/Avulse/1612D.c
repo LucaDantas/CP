@@ -1,0 +1,1 @@
+int main() { int t; scanf("%d", &t); while(t--) { long long a, b, x, aux; scanf("%lld %lld %lld", &a, &b, &x); if(a < b) aux = a, a = b, b = aux; if(x > a) { puts("NO"); continue; } while(b && (x < a && x < b)) a %= b, aux = a, a = b, b = aux; puts(a == x || b == x || (b && a%b == x%b) ? "YES" : "NO"); } }
