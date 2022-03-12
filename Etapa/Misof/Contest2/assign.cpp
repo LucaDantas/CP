@@ -9,11 +9,17 @@ map<int,int> mp;
 
 int w[maxn], a[maxn], d[maxn];
 
+int pref[maxn];
+
 int main() {
 	int n; scanf("%d", &n);
 	for(int i = 0; i < n; i++)
-		scanf("%d", &w[i]), --w[i];
-	
+		scanf("%d", &w[i]), --w[i], pref[w[i]]++;
+
+	pref[0]--;
+	for(int i = 1; i < n; i++)
+		pref[i] += pref[i-1]-1;
+
 	for(int i = 0; i < n; i++)
 		scanf("%d", &d[i]);
 	
@@ -21,28 +27,9 @@ int main() {
 		scanf("%d", &a[i]);
 	
 	for(int i = 0; i < n; i++)
-		grp[w[i]].insert(a[i]), ++mp[w[i]];
-	
-	vector<pair<int,int>> v;
-	for(auto x : mp) {
-		int pos = x.first, val = x.second;
-		if(x == *mp.rbegin())
-			val -= (mp.begin()->first) + n - pos;
-		else val -= (mp.upper_bound(pos)->first) - pos;
-		v.push_back({val, pos});
-	}
+		grp[w[i]].insert(a[i]);
 
-	pair<int,int> opt = {0x3f3f3f3f, 0};
-
-	int now = 0;
-	for(int rep = 0; rep < 2; rep++) {
-		for(int i = 0; i < (int)(v.size()); i++) {
-			opt = min(opt, {now, v[i].second});
-			now += v[i].first;
-		}
-	}
-
-	int ans = 0, start = opt.second;
+	int ans = 0, start = (min_element(pref, pref+n)-pref+1)%n;
 
 	set<int> st;
 	for(int i = start, foi = 0; i != start || !foi; i = (i+1)%n, foi = 1) {
