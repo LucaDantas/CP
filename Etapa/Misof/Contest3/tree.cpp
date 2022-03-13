@@ -1,73 +1,78 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-constexpr int maxn = 5e5+10;
+constexpr int maxn = 5e5+10, inf = 0x3f3f3f3f;
 
+int x[maxn], h[maxn];
 
-struct Event {
-	int x, ini, t, id;
-	bool operator<(const Event& o) const {
-		if(x == o.x) return t < o.t;
-		return x < o.x;
-	}
-};
+int l[maxn], r[maxn]; // qual o primeiro momento que eu consigo cair pra esquerda->l e direita->r
 
 struct BIT {
 	int bit[maxn];
 	void upd(int x, int v) {
-		for(; x > 0; x -= x&-x)
+		for(x++; x < maxn; x += x&-x)
 			bit[x] += v;
 	}
 	int query(int x) {
 		int ans = 0;
-		for(; x < maxn; x += x&-x)
+		for(x++; x > 0; x -= x&-x)
 			ans += bit[x];
 		return ans;
 	}
 } bit;
 
-vector<Event> events;
-
-int ans[maxn];
-int x[maxn], h[maxn], a[maxn], b[maxn];
+vector<pair<int,int>> query[maxn]; // posicao no vetor == l, .first == r, .second == id
+vector<pair<int,int>> ev[maxn]; // add element to bit
 
 int main() {
-	int n; scanf("%d", &n); if(n > 10000) assert(0);
-	int Q; scanf("%d", &Q);
+	int n, q; scanf("%d %d", &n, &q);
 	for(int i = 1; i <= n; i++)
-		scanf("%d %d", &x[i], &h[i]);
-	x[0] = x[1];
-	x[n+1] = x[n];
+		scanf("%d %d", x+i, h+i);
+
 	for(int i = 1; i <= n; i++) {
-		for(a[i] = i; a[i] > 0; --a[i]) {
-			if(x[i] - x[a[i]-1] >= h[i]) break;
-			if(x[i] - x[a[i]] >= h[a[i]]) a[i] = a[a[i]];
-			if(x[i] - x[a[i]-1] >= h[i] || !a[i]) break;
+		if(x[i] - x[1] < h[i]) { l[i] = 0; continue; }
+		l[i] = i;
+		while(l[i] >= 1 && x[i] - x[l[i]] < h[i]) {
+			if(x[i] - x[l[i]] >= h[l[i]])
+				--l[i];
+			else 
+				l[i] = l[l[i]]-1;
 		}
-		fprintf(stderr, "a[i] %d %d\n", i, a[i]);
-		// events.push_back({i, a[i], 1, i});
+		l[i]++; // com esse negocio acima eu chego no primeiro cara que todo mundo antes caiu
 	}
+
 	for(int i = n; i >= 1; i--) {
-		for(b[i] = i; b[i] <= n; b[i]++) {
-			if(x[b[i]] - x[i] >= h[i]) break;
-			if(x[b[i]] - x[i] >= h[b[i]]) b[i] = b[b[i]];
-			if(x[b[i]] - x[i] >= h[i] || b[i] > n) break;
+		if(x[n] - x[i] < h[i]) { r[i] = n+1; continue; }
+		r[i] = i;
+		while(r[i] <= n && x[r[i]] - x[i] < h[i]) {
+			if(x[r[i]] - x[i] >= h[r[i]])
+				++r[i];
+			else
+				r[i] = r[r[i]]+1;
 		}
-		fprintf(stderr, "b[i] %d %d\n", i, b[i]);
-		/* events.push_back({b[i], i, 1, i});
-		events.push_back({b[i], a[i], -1, i}); */
+		--r[i];
 	}
-	/* for(int qq = 0; qq < Q; qq++) {
+
+	for(int i = 1; i <= n; i++) {
+		ev[l[i]].push_back({i, 1});
+		ev[i].push_back({r[i], 1});
+		ev[l[i]].push_back({r[i],-1});
+	}
+
+	for(int i = 0; i < q; i++) {
 		int l, r; scanf("%d %d", &l, &r);
-		events.push_back({r, l, 2, qq});
+		query[l].push_back({r, i});
 	}
-	sort(events.begin(), events.end());
-	for(auto e : events) {
-		int ini = e.ini, t = e.t, id = e.id;
-		printf("%d %d %d %d\n", e.x, ini, t, id);
-		if(t != 2) bit.upd(ini, t);
-		else ans[id] = bit.query(ini);
+
+	vector<int> ans(q);
+
+	for(int i = n; i >= 1; i--) {
+		for(pair<int,int> p : ev[i])
+			bit.upd(p.first, p.second);
+		for(pair<int,int> p : query[i])
+			ans[p.second] = bit.query(p.first);
 	}
-	for(int i = 0; i < Q; i++)
-		printf("%d\n", ans[i]); */
+
+	for(int i = 0; i < q; i++)
+		printf("%d\n", ans[i]);
 }
